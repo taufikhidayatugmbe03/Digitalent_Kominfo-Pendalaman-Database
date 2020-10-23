@@ -133,4 +133,18 @@ export class Customer {
     return customers
   }
 
+  async getByAge(age: string) {
+    let customers: CustomerType[]
+    try{
+      customers = await this.model.aggregate([
+        {
+         $lt: [age] 
+        }
+      ]).exec()
+    } catch (error){
+      throw error
+    }
+    return customers
+  }
+
 }

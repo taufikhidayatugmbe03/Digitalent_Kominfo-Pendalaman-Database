@@ -101,6 +101,17 @@ app.get('/customers/state/:state', async (req, res, next) => {
   res.json(customers)
 })
 
+app.get('/customers/age/:age', async (req, res, next) => {
+  let customers: CustomerType[]
+  const age = req.params.age as string
+
+  try {
+    customers = await customerModel.getByAge(age)
+  } catch (error) {
+    return next(error)
+  }
+})
+
 app.listen(4000, () => {
   console.log('App listen to port 4000');
 });
