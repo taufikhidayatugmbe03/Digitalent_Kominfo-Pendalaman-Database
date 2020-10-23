@@ -73,7 +73,7 @@ app.get('/customers/search', async (req, res, next) => {
 })
 
 //@routes   GET /customers/type/:type
-//@desc     saerching customer by 'type'
+//@desc     Getting customer by 'type'
 app.get('/customers/type/:type', async (req, res, next) => {
   let customers: CustomerType[];
   const type = req.params.type as string;
@@ -85,6 +85,20 @@ app.get('/customers/type/:type', async (req, res, next) => {
   }
 
   return res.send(customers)
+})
+
+//@router   GET /customers/state/:state
+//@desc     Getting customer by 'State'
+app.get('/customers/state/:state', async (req, res, next) => {
+  let customers: CustomerType[]
+  const state = req.params.state as string
+
+  try {
+    customers = await customerModel.getByState(state)
+  } catch (error) {
+    return next(error)
+  }
+  res.json(customers)
 })
 
 app.listen(4000, () => {

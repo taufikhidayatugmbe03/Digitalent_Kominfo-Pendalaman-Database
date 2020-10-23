@@ -114,4 +114,23 @@ export class Customer {
       process.exit(1);
     }
   }
+
+  async getByState(state: string) {
+    let customers: CustomerType[]
+    try {
+      customers = await this.model.aggregate([
+        {
+          $match: {
+            state: {
+              $eq: state
+            }
+          }
+        }
+      ]).exec()
+    } catch (error) {
+      throw error
+    }
+    return customers
+  }
+
 }
